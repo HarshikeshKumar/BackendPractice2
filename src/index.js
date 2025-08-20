@@ -2,7 +2,7 @@ const express = require("express");
 
 const ServerConfig = require("./config/serverConfig.js");
 const connectDB = require("./config/dbConfig.js");
-const User = require("./schema/userSchema.js");
+// const User = require("./schema/userSchema.js");
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.listen(ServerConfig.PORT, async () => {
   await connectDB();
   console.log(`Server listening at port: ${ServerConfig.PORT}`);
 
+  /*
   const newUser = await User.create({
     firstName: "Gaurav",
     lastName: "Singh",
@@ -31,4 +32,5 @@ app.listen(ServerConfig.PORT, async () => {
 
   console.log("New User successfully created");
   console.log(newUser);
+  */
 });
