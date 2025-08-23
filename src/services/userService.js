@@ -20,8 +20,24 @@ class UserService {
         statusCode: 400,
       };
     }
+
     // 2. If not then create the user in the database
+    const newUser = await this.userRepository.createUser({
+      email: userDetails.email,
+      password: userDetails.password,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      mobileNumber: userDetails.mobileNumber,
+    });
+
+    if (!newUser) {
+      throw {
+        reason: "Something went wrong, cannot create user",
+        statusCode: 500,
+      };
+    }
     // 3. return the detail of created user
+    return newUser;
   }
 }
 

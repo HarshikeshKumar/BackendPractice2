@@ -5,6 +5,11 @@ class UserRepository {
     const response = await User.findOne({ ...parameters });
     return response;
   }
+
+  async createUser(userDetails) {
+    const response = await User.create(userDetails);
+    return response;
+  }
 }
 
 module.exports = UserRepository;
