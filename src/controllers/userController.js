@@ -9,7 +9,7 @@ async function createUser(req, res) {
 
   try {
     const userService = new UserService(new UserRepository());
-    console.log(userService);
+    // console.log(userService);
     const response = await userService.registerUser(req.body);
     return res.json({
       message: "Successfully registered the user",
@@ -18,7 +18,7 @@ async function createUser(req, res) {
       error: {},
     });
   } catch (error) {
-    return res.json({
+    return res.status(error.statusCode).json({
       success: false,
       message: error.reason,
       data: {},
