@@ -31,6 +31,7 @@ class UserService {
       mobileNumber: userDetails.mobileNumber,
     });
 
+    // Agar User create nhi hua toh
     if (!newUser) {
       throw {
         reason: "Something went wrong, cannot create user",
