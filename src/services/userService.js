@@ -1,7 +1,7 @@
 class UserService {
-  constructor(userRepository) {
+  constructor(_userRepository) {
     // In the argument we will expect userRepository argument
-    this.userRepository = userRepository;
+    this.userRepository = _userRepository;
   }
 
   async registerUser(userDetails) {
@@ -17,7 +17,7 @@ class UserService {
       // If we found a user
       throw {
         reason: "User with the given email and mobile number is already exists",
-        statusCode: 404,
+        statusCode: 400,
       };
     }
     // 2. If not then create the user in the database
