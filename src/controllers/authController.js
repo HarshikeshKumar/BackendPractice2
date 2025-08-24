@@ -6,10 +6,16 @@ async function login(req, res) {
     // call authService
     const response = await loginUser(loginPayload);
 
+    res.cookie("authToken", response, {
+      httpOnly: true, // httpOnly cookie
+      secure: false,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // convert in milliseconds
+    });
+
     return res.status(200).json({
       success: true,
       message: "Loged in successfully",
-      data: response,
+      data: {},
       error: {},
     });
   } catch (error) {
