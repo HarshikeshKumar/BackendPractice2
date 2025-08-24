@@ -54,6 +54,13 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+userSchema.pre("save", async function () {
+  // Here you can modify your user before it is saved in mongodb
+  console.log("Executing pre save hook");
+  console.log(this); // In Normal function this keyword refers to callsite
+  console.log("Exitting Pre save hook and now creating user");
+});
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
