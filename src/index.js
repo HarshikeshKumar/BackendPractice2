@@ -4,6 +4,7 @@ const ServerConfig = require("./config/serverConfig.js");
 const connectDB = require("./config/dbConfig.js");
 const userRouter = require("./routes/userRoute.js");
 const cartRouter = require("./routes/cartRoute.js");
+const { authRouter } = require("./routes/authRoute.js");
 // const User = require("./schema/userSchema.js");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRouter); // connects the router to the server
 
 app.use("/carts", cartRouter);
+app.use("/auth", authRouter);
 
 app.post("ping", (req, res) => {
   console.log(req.body);

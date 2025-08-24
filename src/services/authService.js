@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRY } = require("../config/serverConfig.js");
 
-async function login(authDetails) {
+async function loginUser(authDetails) {
   const email = authDetails.email;
   const plainPassword = authDetails.password;
 
@@ -25,7 +25,7 @@ async function login(authDetails) {
 
   if (!isPasswordValidated) {
     throw {
-      message: "Invalod password, Please try again",
+      message: "Invalid password, Please try again",
       statusCode: 401,
     };
   }
@@ -40,5 +40,5 @@ async function login(authDetails) {
 }
 
 module.exports = {
-  login,
+  loginUser,
 };
