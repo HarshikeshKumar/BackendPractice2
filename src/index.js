@@ -8,6 +8,7 @@ const cartRouter = require("./routes/cartRoute.js");
 const { authRouter } = require("./routes/authRoute.js");
 const { isLoggedIn } = require("./validation/authValidator.js");
 const uploader = require("./middlewares/multerMiddleware.js");
+const cloudinary = require("./config/clousinaryConfig.js");
 // const User = require("./schema/userSchema.js");
 
 const app = express();
@@ -24,8 +25,10 @@ app.use("/users", userRouter); // connects the router to the server
 app.use("/carts", cartRouter);
 app.use("/auth", authRouter);
 
-app.post("/photo", uploader.single("incomingFile"), (req, res) => {
-  console.log(req.file); // uploade file object
+app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
+  // console.log(req.file); // Print uploaded file object file object
+  const result = await cloudinary.uploader.upload(req.file.path);
+  // console.log("Result from cloudinary: ", result);
   return res.json({
     message: "OK",
   });
