@@ -7,6 +7,7 @@ const userRouter = require("./routes/userRoute.js");
 const cartRouter = require("./routes/cartRoute.js");
 const { authRouter } = require("./routes/authRoute.js");
 const { isLoggedIn } = require("./validation/authValidator.js");
+const uploader = require("./middlewares/multerMiddleware.js");
 // const User = require("./schema/userSchema.js");
 
 const app = express();
@@ -22,6 +23,12 @@ app.use("/users", userRouter); // connects the router to the server
 
 app.use("/carts", cartRouter);
 app.use("/auth", authRouter);
+
+app.post("/photo", uploader.single("incomingFile"), (req, res) => {
+  return res.json({
+    message: "OK",
+  });
+});
 
 app.get("/ping", isLoggedIn, (req, res) => {
   // controller
