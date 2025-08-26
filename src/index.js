@@ -25,6 +25,7 @@ app.use("/carts", cartRouter);
 app.use("/auth", authRouter);
 
 app.post("/photo", uploader.single("incomingFile"), (req, res) => {
+  console.log(req.file); // uploade file object
   return res.json({
     message: "OK",
   });
