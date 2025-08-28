@@ -10,6 +10,7 @@ const { isLoggedIn } = require("./validation/authValidator.js");
 const uploader = require("./middlewares/multerMiddleware.js");
 const cloudinary = require("./config/clousinaryConfig.js");
 const fs = require("fs/promises");
+const productRouter = require("./routes/productRoute.js");
 // const User = require("./schema/userSchema.js");
 
 const app = express();
@@ -25,6 +26,7 @@ app.use("/users", userRouter); // connects the router to the server
 
 app.use("/carts", cartRouter);
 app.use("/auth", authRouter);
+app.use("/products", productRouter);
 
 app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
   // console.log(req.file); // Print uploaded file object file object
