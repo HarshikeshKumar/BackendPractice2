@@ -28,6 +28,26 @@ async function createProduct(productDetails) {
   return product;
 }
 
+async function getProductById(productId) {
+  const response = await ProductRepository.getProductById(productId);
+
+  if (!response) {
+    throw { reason: "Not able to find the product", statusCode: 404 };
+  }
+  return response;
+}
+
+async function deleteProductById(productId) {
+  const response = await ProductRepository.deleteProductById(productId);
+
+  if (!response) {
+    throw { reason: "Can not delete the product", statusCode: 500 };
+  }
+  return response;
+}
+
 module.exports = {
   createProduct,
+  getProductById,
+  deleteProductById,
 };
