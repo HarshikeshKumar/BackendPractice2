@@ -1,4 +1,6 @@
 const Product = require("../schema/productSchema");
+const InternalServerError = require("../utils/internalServerError.js");
+const BadRequestError = require("../utils/badRequestError.js");
 
 async function createProduct(productDetails) {
   try {
@@ -6,7 +8,14 @@ async function createProduct(productDetails) {
 
     return response;
   } catch (error) {
+    if (error.name === "ValidationError") {
+      const errorMessageList = Object.keys(error.errors).map((property) => {
+        return error.errors[property].message;
+      });
+      throw new BadRequestError(errorMessageList);
+    }
     console.log(error);
+    throw new InternalServerError();
   }
 }
 
@@ -16,6 +25,7 @@ async function getProductById(productId) {
     return product;
   } catch (error) {
     console.log(error);
+    throw new InternalServerError();
   }
 }
 
@@ -25,6 +35,7 @@ async function deleteProductById(productId) {
     return true;
   } catch (error) {
     console.log(error);
+    throw new InternalServerError();
   }
 }
 
