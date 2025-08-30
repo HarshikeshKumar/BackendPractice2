@@ -1,6 +1,8 @@
 const cloudinary = require("../config/clousinaryConfig.js");
 const ProductRepository = require("../repositories/productRepository.js");
 const fs = require("fs/promises");
+const InternalServerError = require("../utils/internalServerError.js");
+const NotFoundError = require("../utils/notFoundError.js");
 
 async function createProduct(productDetails) {
   // 1. We should if an image is comming to create the product, then we should first upload it on cloudinary
@@ -12,7 +14,7 @@ async function createProduct(productDetails) {
       await fs.unlink(imagePath);
     } catch (error) {
       console.log(error);
-      throw { reason: "Not able to create product", statusCode: 500 };
+      throw new InternalServerError();
     }
   }
   // 2. Then use the url from cloudinary and product details to add product in db
@@ -21,10 +23,6 @@ async function createProduct(productDetails) {
     productImage: productImage,
   });
 
-  if (!product) {
-    throw { reason: "Not able to create product", statusCode: 500 };
-  }
-
   return product;
 }
 
@@ -32,7 +30,7 @@ async function getProductById(productId) {
   const response = await ProductRepository.getProductById(productId);
 
   if (!response) {
-    throw { reason: "Not able to find the product", statusCode: 404 };
+    throw new NotFoundError("Product");
   }
   return response;
 }
@@ -41,7 +39,7 @@ async function deleteProductById(productId) {
   const response = await ProductRepository.deleteProductById(productId);
 
   if (!response) {
-    throw { reason: "Can not delete the product", statusCode: 500 };
+    throw new NotFoundError("Product");
   }
   return response;
 }

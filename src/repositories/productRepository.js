@@ -32,7 +32,8 @@ async function getProductById(productId) {
 async function deleteProductById(productId) {
   try {
     const response = await Product.findByIdAndDelete(productId);
-    return true;
+    // console.log(response);
+    return response;
   } catch (error) {
     console.log(error);
     throw new InternalServerError();
