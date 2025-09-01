@@ -5,10 +5,17 @@ const {
   deleteProduct,
 } = require("../controllers/productController.js");
 const uploader = require("../middlewares/multerMiddleware.js");
+const { isLoggedIn, isAdmin } = require("../validation/authValidator.js");
 
 const productRouter = express.Router();
 
-productRouter.post("/", uploader.single("productImage"), addProduct);
+productRouter.post(
+  "/",
+  isLoggedIn,
+  isAdmin,
+  uploader.single("productImage"),
+  addProduct
+);
 productRouter.get("/:id", getProduct);
 productRouter.delete("/:id", deleteProduct);
 
