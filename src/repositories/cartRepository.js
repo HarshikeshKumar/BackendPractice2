@@ -17,6 +17,21 @@ async function createcart(userId) {
     throw new InternalServerError();
   }
 }
+
+// Get cart
+async function getCartByUserId(userId) {
+  try {
+    const cart = await Cart.findOne({
+      user: userId,
+    });
+    return cart;
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError();
+  }
+}
+
 module.exports = {
   createcart,
+  getCartByUserId,
 };
