@@ -1,4 +1,5 @@
 const { findUser, createUser } = require("../repositories/userRepository.js");
+const { createcart } = require("../repositories/cartRepository.js");
 
 async function registerUser(userDetails) {
   // console.log("Hitting Service layer");
@@ -34,6 +35,9 @@ async function registerUser(userDetails) {
       statusCode: 500,
     };
   }
+
+  await createcart(newUser._id);
+
   // 3. return the detail of created user
   return newUser;
 }
