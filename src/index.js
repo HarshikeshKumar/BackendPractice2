@@ -38,7 +38,7 @@ app.post("/photo", uploader.single("incomingFile"), async (req, res) => {
   });
 });
 
-app.get("/ping", isLoggedIn, (req, res) => {
+app.get("/ping", (req, res) => {
   // controller
   console.log(req.body);
   // console.log(req.cookies);
