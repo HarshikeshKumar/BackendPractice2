@@ -1,4 +1,8 @@
-const { getCart, modifyCart } = require("../services/cartService.js");
+const {
+  getCart,
+  modifyCart,
+  clearProductsFromCart,
+} = require("../services/cartService.js");
 const AppError = require("../utils/appError.js");
 
 async function getCartByUser(req, res) {
@@ -62,7 +66,37 @@ async function modifyProductToCart(req, res) {
   }
 }
 
+// Clear products from cart
+async function clearCartById(req, res) {
+  try {
+    const cart = await clearProductsFromCart(req.user.id);
+    return res.status(200).json({
+      success: true,
+      message: "Successfully cleared all products from the cart",
+      error: {},
+      data: cart,
+    });
+  } catch (error) {
+    console.log(error);
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        success: false,
+        message: error.message,
+        error: error,
+        data: {},
+      });
+    }
+    return res.status(500).json({
+      success: false,
+      message: "Sonething went wrong",
+      error: error,
+      data: {},
+    });
+  }
+}
+
 module.exports = {
   getCartByUser,
   modifyProductToCart,
+  clearCartById,
 };
